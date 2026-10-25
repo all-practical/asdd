@@ -1,0 +1,164 @@
+
+EXPERIMENT NO. 5
+Title: Multi-Service Application Using Docker Compose
+
+STEP 1: Create a project folder
+
+Open Command Prompt (CMD) and run:
+
+mkdir ASDD-Experiment5
+cd ASDD-Experiment5
+
+
+STEP 2: Create app.py
+
+Open Notepad:
+
+notepad app.py
+
+Paste this code and save the file:
+
+from flask import Flask
+import redis
+import os
+
+app = Flask(__name__)
+
+redis_client = redis.Redis(
+    host=os.getenv("REDIS_HOST", "redis"),
+    port=6379,
+    decode_responses=True
+)
+
+@app.route("/")
+def home():
+    visits = redis_client.incr("visits")
+    return f"""
+    <h1>ASDD Experiment 5</h1>
+    <p>Multi-Service Application Using Docker Compose</p>
+    <h2>Welcome!</h2>
+    <p>Page visits: {visits}</p>
+    """
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+
+STEP 3: Create requirements.txt
+
+Run:
+
+notepad requirements.txt
+
+Paste and save:
+
+flask
+redis
+
+
+STEP 4: Create Dockerfile
+
+Run:
+
+notepad Dockerfile
+
+Paste and save:
+
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "app.py"]
+
+
+STEP 5: Create docker-compose.yml
+
+Run:
+
+notepad docker-compose.yml
+
+Paste and save:
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+
+
+STEP 6: Verify that all files exist
+
+Run:
+
+dir
+
+You should see:
+- app.py
+- requirements.txt
+- Dockerfile
+- docker-compose.yml
+
+
+STEP 7: Start the multi-service application
+
+Make sure Docker Desktop is running.
+
+Run:
+
+docker compose down
+docker compose up --build -d
+
+
+STEP 8: Check the running containers
+
+Run:
+
+docker compose ps
+
+You should see the web and redis services running.
+
+
+STEP 9: Test the application
+
+Open your browser and visit:
+
+http://localhost:5000
+
+Expected output:
+ASDD Experiment 5
+Multi-Service Application Using Docker Compose
+Welcome!
+Page visits: 1
+
+Refresh the page. The visit count should increase to 2, 3, and so on.
+
+
+STEP 10: View logs
+
+To view application logs, run:
+
+docker compose logs
+
+To view only the web service logs:
+
+docker compose logs web
+
+
+STEP 11: Stop the application
+
+Run:
+
+docker compose down
+
+
+RESULT:
+Successfully created and executed a multi-service application using Docker Compose, with a Flask web application and Redis database running in separate containers.
