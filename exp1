@@ -1,0 +1,141 @@
+
+EXPERIMENT 1: AGILE SOFTWARE PROJECT LIFECYCLE USING JIRA WITH DEVOPS PIPELINE INTEGRATION
+
+STEP 1: CREATE A JIRA PROJECT
+
+1. Open https://www.atlassian.com/software/jira
+2. Sign in or create an account.
+3. Create a new project.
+4. Project name: ASDD-Demo
+5. Choose Scrum.
+6. Create the project.
+
+STEP 2: CREATE TASKS IN JIRA
+
+Create the following sprints:
+
+1. Design the application
+2. Develop the application
+3. Test the application
+
+For a Scrum project:
+- Create Sprint 1.
+- Add the issues to the sprint.
+- Start the sprint.
+
+Move issues across the board:
+TO DO → IN PROGRESS → DONE
+
+STEP 3: CREATE A GITHUB REPOSITORY
+
+1. Open https://github.com/
+2. Sign in to GitHub.
+3. Click New repository.
+4. Repository name: asdd-demo
+5. Choose Public or Private.
+6. Leave Add a README file unchecked.
+7. Click Create repository.
+
+STEP 4: CREATE A LOCAL PROJECT FOLDER
+
+Open Command Prompt (CMD) and run:
+
+mkdir asdd-demo
+cd asdd-demo
+git init
+
+STEP 5: CONFIGURE GIT
+
+Run these commands if Git has not already been configured:
+
+git config --global user.name "Your Name"
+git config --global user.email "your-email@example.com"
+
+Replace the name and email with your actual details.
+
+STEP 6: CREATE THE APPLICATION
+
+Run:
+
+notepad index.html
+
+Paste the following code into Notepad:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASDD Demo</title>
+</head>
+<body>
+    <h1>Welcome to ASDD Demo</h1>
+    <p>Agile project with DevOps integration.</p>
+</body>
+</html>
+
+Save and close Notepad.
+
+STEP 7: CREATE THE CI WORKFLOW
+
+Create the workflow folders:
+
+mkdir .github
+mkdir .github\workflows
+
+Create the workflow file:
+
+notepad .github\workflows\ci.yml
+
+Paste the following YAML code:
+
+name: ASDD CI Pipeline
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify application
+        run: test -f index.html
+
+Save and close Notepad.
+
+STEP 8: ADD AND COMMIT THE FILES
+
+git add .
+git commit -m "Create ASDD demo and CI pipeline"
+
+STEP 9: CONNECT TO GITHUB
+
+Replace YOUR_USERNAME with your GitHub username:
+
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/asdd-demo.git
+
+STEP 10: PUSH CODE TO GITHUB
+
+git push -u origin main
+
+Sign in or authenticate with GitHub if prompted.
+
+STEP 11: VERIFY THE DEVOPS PIPELINE
+
+1. Open your GitHub repository.
+2. Click the Actions tab.
+3. Open ASDD CI Pipeline.
+4. Confirm that the workflow has completed successfully.
+5. A green tick indicates that the workflow passed.
+
+STEP 12: DEMONSTRATE THE AGILE LIFECYCLE
+
+1. Open the ASDD-Demo Jira project.
+2. Show the issues on the board.
+3. Move an issue from TO DO to IN PROGRESS.
+4. Move it to DONE after completion.
+5. Show the GitHub repository and successful Actions workflow.
