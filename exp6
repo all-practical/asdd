@@ -1,0 +1,146 @@
+
+EXPERIMENT NO. 6
+
+TITLE: To Deploy and Manage Containers Using Kubernetes.
+
+STEP 1: Verify Kubernetes Installation
+
+Open CMD and execute:
+
+kubectl version --client
+
+kubectl get nodes
+
+Expected result: The node docker-desktop should show STATUS as Ready.
+
+
+STEP 2: Create a Kubernetes Deployment
+
+Run:
+
+kubectl create deployment asdd-app --image=nginx
+
+Expected output:
+deployment.apps/asdd-app created
+
+
+STEP 3: Check the Deployment
+
+Run:
+
+kubectl get deployments
+
+Wait until READY shows 1/1.
+
+
+STEP 4: Check the Pods
+
+Run:
+
+kubectl get pods
+
+Wait until the pod status becomes Running.
+
+
+STEP 5: Expose the Deployment
+
+Run:
+
+kubectl expose deployment asdd-app --type=NodePort --port=80
+
+Expected output:
+service/asdd-app exposed
+
+
+STEP 6: Check the Service
+
+Run:
+
+kubectl get services
+
+Verify that the asdd-app service has been created.
+
+
+STEP 7: Access the Application
+
+Run:
+
+kubectl port-forward service/asdd-app 8080:80
+
+Keep this CMD window open.
+
+Open the browser and visit:
+
+http://localhost:8080
+
+Expected result: The Nginx Welcome page should appear.
+
+Press Ctrl + C in CMD when you want to stop port forwarding.
+
+
+STEP 8: Scale the Deployment
+
+Run:
+
+kubectl scale deployment asdd-app --replicas=3
+
+Expected output:
+deployment.apps/asdd-app scaled
+
+
+STEP 9: Verify the Replicas 
+
+Run:
+
+kubectl get deployments
+
+kubectl get pods
+
+Expected result: Three pods should be running once they are ready.
+
+
+STEP 10: Update the Application Image
+
+Run:
+
+kubectl set image deployment/asdd-app nginx=nginx:1.27
+
+Note: If the image tag is unavailable or causes an error, use a valid Nginx image tag.
+
+Check the update:
+
+kubectl rollout status deployment/asdd-app
+
+Expected result:
+deployment "asdd-app" successfully rolled out
+
+
+STEP 11: Verify All Resources in 2nd cmd
+
+Run:
+
+kubectl get deployments
+
+kubectl get pods
+
+kubectl get services
+
+Confirm that the deployment has three replicas and the pods are running.
+
+
+STEP 12: Clean Up the Resources
+
+After completing the practical demonstration, run:
+
+kubectl delete service asdd-app
+
+kubectl delete deployment asdd-app
+
+Expected output:
+service "asdd-app" deleted
+deployment.apps "asdd-app" deleted
+
+
+RESULT:
+
+Successfully deployed and managed an Nginx application using Kubernetes. Created a deployment, exposed it through a service, accessed the application, scaled replicas, updated the container image, and verified the Kubernetes resources.
