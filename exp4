@@ -1,0 +1,121 @@
+
+EXPERIMENT 4: CONTAINERIZE AN APPLICATION USING DOCKER
+
+STEP 1: CHECK DOCKER INSTALLATION
+
+docker --version
+docker info
+
+STEP 2: CREATE PROJECT FOLDER
+
+mkdir ASDD-Experiment4
+cd ASDD-Experiment4
+
+STEP 3: CREATE HTML APPLICATION
+
+notepad index.html
+
+Paste the following code into Notepad:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker Experiment</title>
+</head>
+<body>
+    <h1>Hello from Docker!</h1>
+    <p>My first containerized application.</p>
+</body>
+</html>
+
+Save and close Notepad.
+
+STEP 4: CREATE DOCKERFILE
+
+notepad Dockerfile
+
+Paste the following code:
+
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+
+Save and close Notepad.
+
+IMPORTANT:
+If the file is saved as Dockerfile.txt, rename it using:
+
+ren Dockerfile.txt Dockerfile
+
+Verify the files:
+
+dir
+
+You should see Dockerfile and index.html.
+
+STEP 5: BUILD DOCKER IMAGE
+
+docker build -t asdd-web-app .
+
+STEP 6: VERIFY DOCKER IMAGE
+
+docker images
+
+Expected:
+Repository: asdd-web-app
+Tag: latest
+
+STEP 7: RUN THE CONTAINER
+
+docker run -d -p 8080:80 --name asdd-container asdd-web-app
+
+This command starts the container in the background and maps host port 8080 to container port 80.
+
+STEP 8: VERIFY RUNNING CONTAINER
+
+docker ps
+
+Expected:
+The container asdd-container should appear in the NAMES column.
+
+STEP 9: TEST APPLICATION
+
+Open a browser and visit:
+
+http://localhost:8080
+
+Expected output:
+
+Hello from Docker!
+My first containerized application.
+
+STEP 10: VIEW CONTAINER LOGS
+
+docker logs asdd-container
+
+STEP 11: STOP THE CONTAINER
+
+docker stop asdd-container
+
+STEP 12: START THE CONTAINER AGAIN
+
+docker start asdd-container
+
+Verify:
+
+docker ps
+
+STEP 13: STOP AND REMOVE THE CONTAINER
+
+docker stop asdd-container
+docker rm asdd-container
+
+If the container is already stopped, docker stop may report that it is not running. You can still remove it with:
+
+docker rm asdd-container
+
+STEP 14: VERIFY THE IMAGE STILL EXISTS
+
+docker images
+
+The asdd-web-app image should still be listed.
