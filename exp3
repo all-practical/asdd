@@ -1,0 +1,95 @@
+
+EXPERIMENT 3: CREATE A CI PIPELINE USING GITHUB ACTIONS
+
+STEP 1: CREATE PROJECT FOLDER
+
+mkdir ASDD-Experiment3
+cd ASDD-Experiment3
+git init
+
+STEP 2: CONFIGURE GIT (if not already configured)
+
+git config --global user.name "Your Name"
+git config --global user.email "your-email@example.com"
+
+STEP 3: CREATE A SAMPLE APPLICATION
+
+notepad index.html
+
+Enter the following HTML code and save the file:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASDD CI Pipeline</title>
+</head>
+<body>
+    <h1>Hello, ASDD!</h1>
+    <p>My first CI pipeline project.</p>
+</body>
+</html>
+
+STEP 4: CREATE THE WORKFLOW FOLDER
+
+mkdir .github
+mkdir .github\workflows
+
+STEP 5: CREATE THE CI WORKFLOW FILE
+
+notepad .github\workflows\ci.yml
+
+Enter the following YAML code and save the file:
+
+name: ASDD CI Pipeline
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify application
+        run: test -f index.html
+
+      - name: Display success message
+        run: echo "CI Pipeline executed successfully!"
+
+STEP 6: ADD AND COMMIT FILES
+
+git add .
+git commit -m "Create CI pipeline"
+
+STEP 7: CREATE A GITHUB REPOSITORY
+
+1. Open https://github.com/
+2. Sign in to your GitHub account.
+3. Click New repository.
+4. Enter repository name: ASDD-Experiment3
+5. Choose Public or Private.
+6. Leave Add a README file unchecked.
+7. Click Create repository.
+
+STEP 8: CONNECT LOCAL REPOSITORY TO GITHUB
+
+Replace YOUR_USERNAME with your actual GitHub username.
+
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/ASDD-Experiment3.git
+
+STEP 9: PUSH CODE TO GITHUB
+
+git push -u origin main
+
+STEP 10: VERIFY THE CI PIPELINE
+
+1. Open your GitHub repository.
+2. Click the Actions tab.
+3. Open ASDD CI Pipeline.
+4. Check that the workflow completed successfully.
+5. Confirm that a green tick appears.
